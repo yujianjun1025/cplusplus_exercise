@@ -1,0 +1,173 @@
+cscope 15 $HOME/cplusTest/hash_map_test -q 0000000031 0000000809
+	@main.cpp
+
+1 
+	~<io¡»am
+>
+
+2 
+	~<¡ršg
+>
+
+3 
+	~<ext/hash_m­
+>
+
+4 
+usšg
+ 
+Çme¥aû
+ 
+	g¡d
+;
+
+5 
+usšg
+ 
+Çme¥aû
+ 
+	g__gnu_cxx
+;
+
+6 
+Çme¥aû
+ 
+	g__gnu_cxx
+
+
+8 ã€€ã€€
+	g‹m¶©e
+<> 
+	ghash
+<
+	g¡ršg
+>
+
+10 ã€€ã€€ 
+size_t
+ 
+Ý”©Ü
+()(cÚ¡ 
+	g¡ršg
+& 
+	gs
+) const
+
+12 ã€€ã€€  
+__¡l_hash_¡ršg
+(
+s
+.
+c_¡r
+());
+
+17 
+	$maš
+(
+¬gc
+, ** 
+¬gv
+)
+
+19 
+hash_m­
+<, > 
+hm
+;
+
+20 
+hm
+.
+	`š£¹
+(
+·œ
+<, >(1, 23));
+
+21 
+hash_m­
+<, >::
+™”©Ü
+ 
+™
+;
+
+22 
+™
+ = 
+hm
+.
+	`fšd
+(1);
+
+23 if(
+™
+ !ð
+hm
+.
+	`’d
+()){
+
+24 
+cout
+<<"fšdh–em’t"<<
+’dl
+;
+
+25 
+cout
+ << "th£cÚd =ð" << 
+™
+->
+£cÚd
+<< 
+’dl
+;
+
+26 
+cout
+ << "thfœ¡ =ð" << 
+™
+->
+fœ¡
+<< 
+’dl
+;
+
+27 
+hm
+.
+	`”a£
+(
+™
+);
+
+30 
+cout
+<< "didn'ˆfšdh–em’t" << 
+’dl
+;
+
+34 
+hash_m­
+<
+¡ršg
+, sŒšg> 
+¡rHash
+;
+
+36 
+¡rHash
+.
+
+40 
+	}
+}
+
+	@
+1
+.
+1
+/usr/include
+1
+9
+main.cpp

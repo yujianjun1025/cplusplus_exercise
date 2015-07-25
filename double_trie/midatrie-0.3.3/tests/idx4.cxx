@@ -1,0 +1,112 @@
+/* idx4.cxx
+ *
+ * Copyright (C) 2001 Theppitak Karoonboonyanan,
+ *   National Electronics and Computer Technology Center
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free
+ * Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+ * MA 02111-1307, USA.  
+ */
+
+//
+// idx4.h - declaration for index #4 data
+// Created: 19 Mar 2001
+// Author:  Theppitak Karoonboonyanan
+//
+
+#include "idx4.h"
+const char* const idx4[] = {
+    "กก1",
+    "กก1",
+    "กก2",
+    "กก3",
+    "กก4",
+    "กง",
+    "กงสุล",
+    "กช",
+    "กฎ1",
+    "กฎ2",
+    "กฎ2",
+    "กฎ1",
+    "กฎ",
+    "กฎหมาย",
+    "กฎหมาย",
+    "กฎ2",
+    "กฐิน",
+    "กด1",
+    "กด1",
+    "กด",
+    "กด2",
+    "กด2",
+    "กด3",
+    "กตัญญู",
+    "กตัญญู",
+    "กติกา",
+    "กตเวที",
+    "กถา",
+    "กนก",
+    "กบ",
+    "กบ",
+    "กบ",
+    "กบฏ",
+    "กบาล",
+    "กมล",
+    "กมล",
+    "กร",
+    "กรกฎาคม",
+    "กรง",
+    "กรง",
+    "กรงเล็บ",
+    "กรณี",
+    "กรณี",
+    "กรณีที่",
+    "กรด",
+    "กรด",
+    "กรด",
+    "กรม",
+    "กรมการ",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรม",
+    "กรรณ",
+    "กรรณิการ์",
+    "กรรม",
+    "กรรม",
+    "กรรมกร",
+    "กรรมการ",
+    "กรรมการ",
+    "กรรมฐาน",
+    "กรรมพันธุ์",
+    "กรรมวิธี",
+    "กรรมสิทธิ์",
+    "กรรมาธิการ",
+    "กรรไกร",
+    "กรวด",
+    "กรวด1",
+    "กรวด1",
+    "กรวย",
+    0
+};
+

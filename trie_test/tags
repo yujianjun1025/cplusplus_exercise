@@ -1,0 +1,30 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ATire	main.cpp	/^        ATire(){$/;"	f	language:C++	class:ATire	signature:()
+ATire	main.cpp	/^class ATire{$/;"	c	language:C++	file:
+CONDITION	main.cpp	/^typedef char CONDITION;$/;"	t	language:C++	file:
+PATH	main.cpp	/^        PATH(CONDITION condition, int target):m_condition(condition),m_target(target){$/;"	f	language:C++	class:PATH	signature:(CONDITION condition, int target)
+PATH	main.cpp	/^class PATH{$/;"	c	language:C++	file:
+State	main.cpp	/^        State(string info = ""):m_info(info){$/;"	f	language:C++	class:State	signature:(string info = Ó)
+State	main.cpp	/^class State{$/;"	c	language:C++	file:
+add_one_path	main.cpp	/^bool State::add_one_path(const PATH& path, int insert_pos ){$/;"	f	language:C++	class:State	signature:(const PATH& path, int insert_pos )
+add_word	main.cpp	/^bool ATire::add_word(const string& word, const string& explain){$/;"	f	language:C++	class:ATire	signature:(const string& word, const string& explain)
+getNextState	main.cpp	/^int State::getNextState(CONDITION condition){$/;"	f	language:C++	class:State	signature:(CONDITION condition)
+m_child	main.cpp	/^        vector<PATH>         m_child;$/;"	m	language:C++	class:State	file:
+m_condition	main.cpp	/^        CONDITION m_condition;$/;"	m	language:C++	class:PATH	file:
+m_info	main.cpp	/^        string               m_info;      $/;"	m	language:C++	class:State	file:
+m_states	main.cpp	/^        vector<State>        m_states;$/;"	m	language:C++	class:ATire	file:
+m_target	main.cpp	/^        int m_target;$/;"	m	language:C++	class:PATH	file:
+main	main.cpp	/^int main(){$/;"	f	language:C++	signature:()
+operator <<	main.cpp	/^        friend ostream& operator << (ostream& out, const ATire atrie){$/;"	f	language:C++	class:ATire	signature:(ostream& out, const ATire atrie)
+operator <<	main.cpp	/^        friend ostream& operator << (ostream& out, const PATH& path){$/;"	f	language:C++	class:PATH	signature:(ostream& out, const PATH& path)
+operator <<	main.cpp	/^        friend ostream& operator << (ostream& out, const State& state){$/;"	f	language:C++	class:State	signature:(ostream& out, const State& state)
+operator ==	main.cpp	/^        bool operator == (const PATH& other){$/;"	f	language:C++	class:PATH	signature:(const PATH& other)
+path_cmp_condition	main.cpp	/^bool State::path_cmp_condition(const PATH& lhs, CONDITION c){$/;"	f	language:C++	class:State	signature:(const PATH& lhs, CONDITION c)
+path_cmp_path	main.cpp	/^bool State::path_cmp_path(const PATH& lhs, const PATH& rhs){$/;"	f	language:C++	class:State	signature:(const PATH& lhs, const PATH& rhs)
+search	main.cpp	/^string ATire::search(const string& query) const{$/;"	f	language:C++	class:ATire	signature:(const string& query) const
+search	main.cpp	/^string ATire::search(const string& query, bool is_prefix_match) const{$/;"	f	language:C++	class:ATire	signature:(const string& query, bool is_prefix_match) const

@@ -1,0 +1,207 @@
+2001-07-16  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* Version 0.3.3
+
+2001-06-19  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* lib/DictImpl/Trie/branches.cxx :
+	Fix Branches::isVacantFor_() to check boundary of target state
+	in addition to usage flag.
+
+2001-06-11  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/imitrie/triedefs.cxx :
+	Use strncpy() instead of strcpy() in AppendTerminator() and
+	TruncateTerminator() to cope with overflow cases.
+
+2001-06-05  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/atrie/atrie.cxx :
+	Make ApproxTrie::approxSearch() use dynamic instead of static buffer,
+	to fix overflow in extreme cases.
+
+	* mida/imitrie/triedefs.h :
+	Increase TrMaxKeyLen from 256 to 1024, to prevent overflow in
+	AppendTerminator() and TruncateTerminator(). [a dirty hack]
+
+2001-05-21  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* configure.in :
+	Add --disable-debug option to let assertions stripped off.
+
+	* Version 0.3.2
+
+2001-05-20  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/midatrie/branches.h :
+	Add boundary check to Branches::isUsedNode(s) to fix
+	Branches::insertBranch() bug in case to = BASE[from] + c
+	exceeds the DA pool size.
+
+	* mida/midatrie/branches.cxx :
+	Add assertion to check that an allocated cell doesn't have
+	CHECK = 0
+
+2001-05-08  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/imitrie/triedefs.h, mida/imitrie/imitrie.h,
+	  mida/midatrie/midatrie.h, mida/midatrie/twotrie.h :
+	Define TrDummyIndex as a safe value for default key data.
+	Assign the dataIdx argument of IMiTrie::insertKey(),
+	MidaTrie::insertKey() and TwoTrie::insertKey() the default value.
+
+	* tests/Makefile.am :
+	Remove test-twotrie from being evaluated (until TwoTrie is ready)
+
+	* mida/midatrie/Makefile.am :
+	Remove twotrie.h and twotrie.cxx from being compiled.
+
+	* mida/midatrie/branches.h, mida/midatrie/branches.cxx :
+	Add code to check file signature. Decrement signature for a new
+	version (0xDAFC: no terminal node concept).
+	Correct the return type of Branches::getSignature_() from int16 to
+	uint16.
+
+	* Version 0.3.1
+
+2001-05-04  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/imitrie/triedefs.h :
+	Change TrErrorIndex to -1.
+
+2001-05-03  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/midatrie/branches.h, mida/midatrie/branches.cxx,
+	  mida/midatrie/midatrie.h, mida/midatrie/midatrie.cxx :
+	Completely remove Terminal node concept from Branches class
+	(even when NOTERMINATOR_OPT is off) by generalizing it as
+	a kind of Separate node, and let MidaTrie handle the distinction.
+
+	* mida/midatrie/branches.cxx :
+	Change Branches::insertBranch() behavior to return old node
+	if already exist.
+
+	* mida/midatrie/twotrie.h, mida/midatrie/twotrie.cxx :
+	Clean up Terminal node concept according to changes in Branches.
+
+2001-04-26  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/midatrie/branches.h, mida/midatrie/branches.cxx,
+	  mida/midatrie/tails.h, mida/midatrie/midatrie.cxx,
+	  mida/midatrie/twotrie.cxx :
+	Remove Terminal node concept (which cause special cases)
+	using NOTERMINATOR_OPT flag.
+
+	* mida/midatrie/branches.h :
+	Fix bug caused by Branches::isUsedNode() which did not cover
+	root states (whose CHECK = 0).
+
+2001-04-21  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/midatrie/twotrie.cxx :
+	Fix data setting bug in TwoTrie::branchWithinLeft_().
+	Fix single chain deletion in RIGHT in TwoTrie::deleteKey().
+	Make nodes that contain RIGHT links and data index separate nodes
+	(by using negative BASE), while data in terminal remain positive.
+
+2001-04-17  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/midatrie/twotrie.h, mida/midatrie/twotrie.cxx :
+	Add pKeyData argument (default = 0) to TwoTrie::walk() interfaces
+	to sneak the key data along the way.
+
+	* mida/midatrie/twotrie.h, mida/midatrie/twotrie.cxx,
+	  tests/test-twotrie.cxx :
+	Change TwoTrie::enumerate() and TwoTrie::enumKeys_() to accept
+	TwoTrieState instance instead of MidaState, so that key data can
+	be sneaked along the way.
+
+	* mida/utils/autoptr.h :
+	Change return type of autoptr<>::operator*() from P* to P&.
+
+	* mida/midatrie/twotrie.cxx :
+	Intoduce an implementation without TERMINATOR distiction, chosen
+	with -DNOTERMINATOR_OPT. (Still need removal of TERMINATOR distiction
+	from Branches class.)
+
+2001-04-16  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/midatrie/twotrie.h, mida/midatrie/twotrie.cxx :
+	Solve the link/data superposition problem using ChRightLink_
+	and ChDataIndex_ links. Add isSeparateNode_(), {get|set}RightLink_(),
+	{get|set}DataIndex_(), deleteSepData_() methods to TwoTrie class.
+	Correct all relevant functions.
+
+	* +tests/test-twotrie.cxx, tests/Makefile.am :
+	Add test program for TwoTrie class.
+
+	* +mida/twotrie.h :
+	Add header file for TwoTrie class.
+
+	* mida/midatrie/twotrie.cxx :
+	Fix branches_.isSeparateNode() assersions to isSeparateNode_().
+	Add missing deleteSepData_() call in TwoTrie::branchWithinRight_()
+	and TwoTrie::deleteKey().
+
+2001-04-13  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/midatrie/twotrie.cxx :
+	Fix TwoTrie::startState() to return an allocated TwoTrieState
+	instance.
+	Fix TwoTrie::walk(MidaState, TrChar, TrWalkResult&) to set rRes
+	properly.
+	Fix missing *p dereferenciing in TwoTrie::walk(MidaState, TrChar*,
+	TrWalkResult&).
+
+	* mida/midatrie/twotrie.h, mida/midatrie/twotrie.cxx :
+	Add indexNo argument to TwoTrie::branchWithinLeft_() and
+	TwoTrie::branchWithinRight_(), add TwoTrie::insertSuffix_(),
+	implement all the three functions.
+
+	* mida/midatrie/twotrie.h, mida/midatrie/twotrie.cxx :
+	Implement twoTrie::deleteKey(), add TwoTrie::isInSingleChain_().
+
+2001-03-25  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/midatrie/midatrie.h, mida/midatrie/midatrie.cxx :
+	Move virtual function implementations into midatrie.cxx.
+	Fix MidaTrie::EnumFunc to IMiTrie::EnumFunc.
+
+	* +mida/midatrie/twotrie.h, +mida/midatrie/twotrie.cxx :
+	Add skeleton files for Two-trie structure.
+
+	* mida/midatrie/branches.h, mida/midatrie/branches.cxx :
+	Add Branches::inputSymbol() function.
+
+2001-03-23  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/utils/autoptr.h :
+	Add reference counting in auto_ptr<> template. (bug fix)
+
+	* +programs/mida.cxx, +programs/getopt.c, +programs/getopt1.c,
+	  +programs/getopt.h :
+	Add mida manipulator utility.
+
+	* Version 0.3.0 (LGPL)
+
+2001-03-22  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* mida/imitrie/imitrie.h, mida/midatrie/midatrie.h :
+	Make compact() method non-pure virtual function.
+
+2001-03-21  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* Rearrange source tree. Create Makefile.am's.
+
+	* mida/utils/cstring.h, mida/utils/cstring.cxx,
+	  mida/utils/strset.h, mida/utils/strset.cxx,
+	  mida/utils/avpair.h, mida/utils/avpair.cxx,
+	  mida/utils/fileutil.h, mida/utils/fileutil.cxx :
+	Change class String to AutoString.
+
+	* Version 0.2.2
+
+2001-03-20  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* midatrie: initial version (split from dictnet project).
+

@@ -1,0 +1,16 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+getValue	main.cpp	/^        int getValue(){$/;"	f	language:C++	class:threadSafeContainer	signature:()
+m_vec	main.cpp	/^        vector<int> m_vec;$/;"	m	language:C++	class:threadSafeContainer	file:
+main	main.cpp	/^int main(){$/;"	f	language:C++	signature:()
+read_call_back	main.cpp	/^void *read_call_back(void* p){$/;"	f	language:C++	signature:(void* p)
+rwlock	main.cpp	/^        pthread_rwlock_t rwlock;$/;"	m	language:C++	class:threadSafeContainer	file:
+setValue	main.cpp	/^        void setValue(int value){$/;"	f	language:C++	class:threadSafeContainer	signature:(int value)
+threadSafeContainer	main.cpp	/^        threadSafeContainer(){$/;"	f	language:C++	class:threadSafeContainer	signature:()
+threadSafeContainer	main.cpp	/^class threadSafeContainer{$/;"	c	language:C++	file:
+write_call_back	main.cpp	/^void *write_call_back(void* p){$/;"	f	language:C++	signature:(void* p)
+~threadSafeContainer	main.cpp	/^        ~threadSafeContainer(){$/;"	f	language:C++	class:threadSafeContainer	signature:()

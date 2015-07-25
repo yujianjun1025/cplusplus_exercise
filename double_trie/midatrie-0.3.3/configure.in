@@ -1,0 +1,64 @@
+dnl Process this file with autoconf to produce a configure script.
+
+AC_INIT(mida/utils/cstring.h)
+dnl Every other copy of the package version number gets its value from here
+AM_INIT_AUTOMAKE(midatrie, 0.3.3)
+
+# dnl create a config.h file (Automake will add -DHAVE_CONFIG_H)
+# AM_CONFIG_HEADER(config.h)
+
+AC_SUBST(VERSION)
+
+ISODATE=`date +%Y-%m-%d`
+AC_SUBST(ISODATE)
+
+AC_CANONICAL_HOST
+
+dnl Checks for programs.
+AC_PROG_CXX
+AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_INSTALL
+AC_PROG_LN_S
+AC_PROG_MAKE_SET
+AM_PROG_LIBTOOL
+
+dnl Check commandline options
+AC_ARG_ENABLE(debug,
+              [  --enable-debug          enable assertion checks [default=yes]],
+              , enable_debug="yes")
+
+if test "x$enable_debug" = "xno"; then
+  CPPFLAGS="$CPPFLAGS -DNDEBUG"
+fi
+
+dnl Checks for libraries.
+
+dnl Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS(limits.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_TYPE_SIZE_T
+
+dnl Checks for library functions.
+
+Xsed="sed -e s/^X//"
+LTLIBOBJS=`echo X"$LIBOBJS" | \
+    $Xsed -e "s,\.[^.]* ,.lo ,g;s,\.[^.]*\$,.lo,"`
+AC_SUBST(LTLIBOBJS)
+
+AC_OUTPUT(
+	Makefile
+	mida/Makefile
+	mida/utils/Makefile
+	mida/vmem/Makefile
+	mida/vmem/tests/Makefile
+	mida/imitrie/Makefile
+	mida/midatrie/Makefile
+	mida/atrie/Makefile
+	programs/Makefile
+	tests/Makefile
+)
+

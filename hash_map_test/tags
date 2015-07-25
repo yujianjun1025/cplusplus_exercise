@@ -1,0 +1,10 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+__gnu_cxx	main.cpp	/^namespace __gnu_cxx  $/;"	n	language:C++	file:
+hash	main.cpp	/^　　template<> struct hash<string>  $/;"	s	language:C++	namespace:__gnu_cxx	file:
+main	main.cpp	/^int main(int argc, char** argv)  $/;"	f	language:C++	signature:(int argc, char** argv)
+operator ()	main.cpp	/^　　   size_t operator()(const string& s) const  $/;"	f	language:C++	struct:__gnu_cxx::hash	signature:(const string& s) const
