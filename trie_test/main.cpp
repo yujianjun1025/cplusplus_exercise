@@ -22,7 +22,8 @@ bool path_cmp_condition(const Path& lhs, CONDITION c){
 
 class State{
     private:
-        State(string info = ""):m_info(info){
+        State(int index, string info = ""):m_info(info){
+            m_index = index;
         }
 
         //为一个状态添加一条路径
@@ -36,6 +37,7 @@ class State{
         //不为空串说明该状态是一个完整的词
         string               m_info; 
         //便于调试
+        int                  m_index;
         friend class ATire;
 };
 
@@ -59,7 +61,7 @@ bool State::add_one_path(CONDITION c, int target){
     int insert_pos = ite - m_child.begin();
     bool is_should_add = false;
     //如果返回最后一个位置，单独判断
-    if(ite == m_child.end()){
+    if(ite == m_child.end() || ite == m_child.begin()){
         is_should_add = true;
         goto finally;
     }
@@ -68,13 +70,26 @@ bool State::add_one_path(CONDITION c, int target){
 
 finally:
     if(!is_should_add){
+        cout <<"没有插入路径:" << "c:" << c << "\tt:"<<target<<endl;
         return false;
     }
 
     Path new_path;
     new_path.m_condition = c;
     new_path.m_target = target;
+    cout <<"插入路径:" << "c:" << c << "\tt:"<<target<<endl;  
+    cout<<"插入前:{";
+    for(vector<Path>::iterator ite = m_child.begin(); ite != m_child.end(); ++ite){
+        cout << ite->m_condition<< "->" << ite->m_target<< ",";
+    }
+    cout <<"}"<<endl;
     m_child.insert(m_child.begin() + insert_pos, new_path);
+    
+    cout<<"插入后:{";
+    for(vector<Path>::iterator ite = m_child.begin(); ite != m_child.end(); ++ite){
+        cout << ite->m_condition<< "->" << ite->m_target<< ",";
+    }
+    cout <<"}"<<endl;
     return true;
 }
 
@@ -83,7 +98,7 @@ class ATire{
         ATire(){
             m_min_word_len = 1000000;
             m_max_word_len = -1;
-            State root_state;
+            State root_state(0);
             m_states.push_back(root_state);
         }
 
@@ -112,8 +127,8 @@ class ATire{
                 out <<"INDEX:" << index++<< " ";
                 out << "childs:" << (*ite_state).m_child.end() - (*ite_state).m_child.begin()  << " "; 
                 out << "Path: { ";
-                for(vector<Path>::const_iterator ite_path = (*ite_state).m_child.begin(); ite_path != (*ite_state).m_child.end(); ++ite_path){
-                    out << (*ite_path).m_condition << "->" << (*ite_path).m_target << ","; 
+                for(vector<Path>::const_iterator ite_path = ite_state->m_child.begin(); ite_path != ite_state->m_child.end(); ++ite_path){
+                    out << ite_path->m_condition << "->" << ite_path->m_target << ","; 
                 }
                 out << "} ";
                 out << "INFO:" << (*ite_state).m_info<< endl;
@@ -145,29 +160,32 @@ bool ATire::add_word(const string& word, const string& explain){
     m_max_word_len = str_len > m_max_word_len ? str_len : m_max_word_len;
 
     int next_state = -1;
-    State* cur_state = &m_states[0];
+    State cur_state = m_states[0];
+    cout<< "add_word path: {" << endl;
     for(int i = 0; i < str_len - 1; i++){
 
         CONDITION c = *p++;
-        next_state = cur_state->getNextState(c);
+        next_state = cur_state.getNextState(c);
         if(next_state == -1){
-            State new_state;
+            int index = m_states.size();
+            State new_state(index);
             m_states.push_back(new_state);
-            next_state = m_states.size() - 1;
-            cur_state->add_one_path(c, next_state);
+            m_states[cur_state.m_index].add_one_path(c, index);
+            next_state = index;
         }
-       cur_state = &m_states[next_state];
+       cur_state = m_states[next_state];
     }
 
     CONDITION c = *p++;
     //最后一个字符特殊处理, 因为要加入对应的字典说明信息
-    next_state = cur_state->getNextState(c);
+    next_state = cur_state.getNextState(c);
     if(next_state == -1){
-        State new_state(explain);
+        int index = m_states.size();
+        State new_state(index, explain);
         m_states.push_back(new_state);
-        next_state = m_states.size() - 1;
-        cur_state->add_one_path(c, next_state);
+        m_states[cur_state.m_index].add_one_path(c, index);
     }
+    cout << "}" << endl;
 
     return true;
 }
@@ -200,6 +218,9 @@ string ATire::prefix_search(const string& query) const{
     State cur_state = m_states[0];
     string max_match_info = "";
     const char* p = query.c_str();
+    vector<int> vec ;
+    vec.push_back(0);
+    cout << "search Path:{";
     while(*p != '\0'){
 
         //说明能够前缀匹配
@@ -207,7 +228,10 @@ string ATire::prefix_search(const string& query) const{
             max_match_info = cur_state.m_info;
         }
         CONDITION c = *p++;
+        cout << next_state <<" + " << c ;
         next_state = cur_state.getNextState(c);
+        cout <<"->"<< next_state << ",";
+        vec.push_back(next_state);
         // 不能继续前缀匹配
         if(next_state == -1) {
             break;
@@ -215,7 +239,7 @@ string ATire::prefix_search(const string& query) const{
 
         cur_state = m_states[next_state];
     }
-
+    cout << "}" << endl;
     return cur_state.m_info != "" ? cur_state.m_info : max_match_info;
 }
 
@@ -271,6 +295,9 @@ int main( int argc , char** argv){
         }
         key = vec[0];
         value = vec[1];
+        if(key == "" || value == ""){
+            continue;
+        }
         tire.add_word(key, value);
         keys.push_back(key);
     }
@@ -278,17 +305,18 @@ int main( int argc , char** argv){
     cout << tire << endl;
     vector<string>::iterator ite = keys.begin();
     for(;ite != keys.end(); ++ite){
-        cout << "query:" << *ite  << "\tlength:" << strlen((*ite).c_str())<< "\tvalue:" << tire.prefix_search(*ite) << endl;
+        string value = tire.prefix_search(*ite);
+        cout << "query:" << *ite  << "\tlength:" << strlen((*ite).c_str())<< "\tvalue:" << value << endl;
     }
 
-    cout << tire << endl;
+    //cout << tire << endl;
 
-    cout << "请输入query:";
-    string query; 
-    while(cin >> query){
-        //cout << "query:" << query << "\tvalue:" << tire.prefix_search(query) << endl;
-        cout << "query:" << query << "\tvalue:" << tire.contain_search(query) << endl;
-        cout << "请输入query:";
-    }
+  //  cout << "请输入query:";
+  //  string query; 
+  //  while(cin >> query){
+  //      cout << "query:" << query << "\tvalue:" << tire.prefix_search(query) << endl;
+  //     // cout << "query:" << query << "\tvalue:" << tire.contain_search(query) << endl;
+  //      cout << "请输入query:";
+  //  }
     return 0;
 }
