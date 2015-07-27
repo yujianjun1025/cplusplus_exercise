@@ -21,6 +21,10 @@ void  read(string file_name){
         //  (*tmp)[s] = t;
         //      }   
    }
+
+  f_slogan.close();
+  f_slogan.close();
+
 }
 
 

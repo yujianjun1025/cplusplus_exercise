@@ -3,11 +3,19 @@
 !_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
-!_TAG_PROGRAM_VERSION	5.8	//
+!_TAG_PROGRAM_VERSION	5.7	//
+KV	main.cpp	/^        KV(int k, int v):m_k(k), m_v(v){}$/;"	f	language:C++	class:KV	signature:(int k, int v)
+KV	main.cpp	/^class KV{$/;"	c	language:C++	file:
 cmp	main.cpp	/^int cmp(int left, int right){$/;"	f	language:C++	signature:(int left, int right)
+cmp_kv	main.cpp	/^bool cmp_kv(KV kv, int k){$/;"	f	language:C++	signature:(KV kv, int k)
+cmp_kv_self	main.cpp	/^bool cmp_kv_self(KV lhs, KV rhs){$/;"	f	language:C++	signature:(KV lhs, KV rhs)
 display	main.cpp	/^void display(const vector<int>& vec, const string& explain = "explain"){$/;"	f	language:C++	signature:(const vector<int>& vec, const string& explain = Ó)
 getRand	main.cpp	/^int getRand(int max=100){$/;"	f	language:C++	signature:(int max=100)
 get_insert_poi_test	main.cpp	/^void get_insert_poi_test(){$/;"	f	language:C++	signature:()
+get_kv_vec	main.cpp	/^vector<KV> get_kv_vec(){$/;"	f	language:C++	signature:()
 get_sorted_vec	main.cpp	/^vector<int> get_sorted_vec(bool asc=true, int length = 10){$/;"	f	language:C++	signature:(bool asc=true, int length = 10)
+kv_test	main.cpp	/^void kv_test(){$/;"	f	language:C++	signature:()
+m_k	main.cpp	/^        int m_k;$/;"	m	language:C++	class:KV	file:
+m_v	main.cpp	/^        int m_v;$/;"	m	language:C++	class:KV	file:
 main	main.cpp	/^int main(){$/;"	f	language:C++	signature:()
 str2vec	main.cpp	/^vector<int> str2vec(const string& str)$/;"	f	language:C++	signature:(const string& str)

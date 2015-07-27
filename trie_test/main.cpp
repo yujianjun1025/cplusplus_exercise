@@ -8,75 +8,40 @@
 #include<algorithm>
 using namespace std;
 
-typedef char CONDITION;
+typedef int CONDITION;
+typedef struct _path{
+    CONDITION m_condition;
+    int m_target;
+}Path;
 
-class path{
-    public:
-        path(CONDITION condition, int target):m_condition(condition),m_target(target){
-        }
-        bool operator == (const path& other){
-            return m_condition == other.m_condition;
-        }
-
-        friend ostream& operator << (ostream& out, const path& path){
-            out << path.m_condition << " -> " << path.m_target;
-            return out;
-        }
-    public:
-        CONDITION m_condition;
-        int m_target;
-};
-
-class State{
-    public:
-        State(int index, string info = ""):m_info(info){
-            m_index = index;
-        }
-
-        //为一个状态添加一条路径
-        bool add_one_path(const path& path, int insert_pos = -1);
-        //给定一个条件返回下一个跳转状态， －1 代表 没有这条路径
-        int getNextState(CONDITION condition);
-
-        //便于调试
-        friend ostream& operator << (ostream& out, const State& state){
-
-            out <<"INDEX:" << state.m_index << " ";
-            out << "path: { ";
-
-
-            for(vector<path>::const_iterator ite = state.m_child.begin(); ite != state.m_child.end(); ++ite){
-                out << *ite << ","; 
-            }
-            out << "}";
-            out << "INFO: {" << state.m_info << "}" << endl;
-            return out;
-
-        }
-    private:
-        //将path排序的比较函数
-        static bool path_cmp_path(const path& lhs, const path& rhs);
-        //通过condition去检索path的比较函数
-        static bool path_cmp_condition(const path& lhs, CONDITION c);
-    public:
-        //有序的纪录所有的状态跳转路径
-        vector<path>         m_child;
-        //不为空串说明该状态是一个完整的词
-        string               m_info; 
-        //便于调试
-        int                  m_index;
-};
-
-bool State::path_cmp_path(const path& lhs, const path& rhs){
-    return lhs.m_condition < rhs.m_condition;
-}
-
-bool State::path_cmp_condition(const path& lhs, CONDITION c){
+//通过condition去检索Path的比较函数
+bool path_cmp_condition(const Path& lhs, CONDITION c){
     return lhs.m_condition < c;
 }
 
-int State::getNextState(CONDITION condition){
-    vector<path>::iterator ite = lower_bound(m_child.begin(), m_child.end(), condition, path_cmp_condition);
+
+class State{
+    private:
+        State(string info = ""):m_info(info){
+        }
+
+        //为一个状态添加一条路径
+        bool add_one_path(CONDITION c, int target);
+        //给定一个条件返回下一个跳转状态， －1 代表 没有这条路径
+        int getNextState(CONDITION condition)const;
+
+    private:
+        //有序的纪录所有的状态跳转路径
+        vector<Path>         m_child;
+        //不为空串说明该状态是一个完整的词
+        string               m_info; 
+        //便于调试
+        friend class ATire;
+};
+
+
+int State::getNextState(CONDITION condition)const{
+    vector<Path>::const_iterator ite = lower_bound(m_child.begin(), m_child.end(), condition, path_cmp_condition);
     int next_state = ite - m_child.begin();
 
     //防止［7］[15]这种会数组越界的情况 
@@ -87,19 +52,28 @@ int State::getNextState(CONDITION condition){
     return m_child[next_state].m_condition == condition ? m_child[next_state].m_target : -1; 
 }
 
-bool State::add_one_path(const path& new_path, int insert_pos ){
+bool State::add_one_path(CONDITION c, int target){
 
-    //插入之前没有指定应该插入的位置
-    if(insert_pos == -1){
-        vector<path>::iterator ite = lower_bound(m_child.begin(), m_child.end(), new_path.m_condition, path_cmp_condition);
-        insert_pos = ite - m_child.begin();
+    //首先判定该跳转路径是否已经存在
+    vector<Path>::iterator ite = lower_bound(m_child.begin(), m_child.end(), c, path_cmp_condition);
+    int insert_pos = ite - m_child.begin();
+    bool is_should_add = false;
+    //如果返回最后一个位置，单独判断
+    if(ite == m_child.end()){
+        is_should_add = true;
+        goto finally;
     }
 
-    //对于一个状态， 不能有condition相同的多条路径
-    if(m_child.end() != find(m_child.begin(), m_child.end(), new_path)){
+    is_should_add = m_child[insert_pos].m_condition != c;
+
+finally:
+    if(!is_should_add){
         return false;
     }
 
+    Path new_path;
+    new_path.m_condition = c;
+    new_path.m_target = target;
     m_child.insert(m_child.begin() + insert_pos, new_path);
     return true;
 }
@@ -107,32 +81,52 @@ bool State::add_one_path(const path& new_path, int insert_pos ){
 class ATire{
     public:
         ATire(){
-            State root_state(0);
+            m_min_word_len = 1000000;
+            m_max_word_len = -1;
+            State root_state;
             m_states.push_back(root_state);
         }
 
         //将一个word加入字典, explain代表word对应的意义
         bool add_word(const string& word, const string& explain);
 
-
-        //字典中的词完全匹配query的前缀，比如字典中大饭店对应北京， 大饭店X也能返回北京
-        //返回结果：该query词在字典中的意义，空串代表字典中没有改词
-        string dict_prefix_search(const string& query)const;
-
         //字典中的词完全匹配query词
         //返回结果：该query词在字典中的意义，空串代表字典中没有改词
-        string search(const string& query)const;
+        string equal_search(const string& query)const;
 
-        friend ostream& operator << (ostream& out, const ATire atrie){
+        //字典中的词完全匹配query的前缀，比如字典中大饭店对应北京， 大饭店.*也能返回北京
+        //黑龙潭对应北京， 黑龙潭公园对应大理， 这种情况需要找到最大的前缀匹配
+        //返回结果：该query词在字典中的意义，空串代表字典中没有改词
+        string prefix_search(const string& query)const;
+
+        //query词中办包含字典中词
+        //例如字典中含有北京对应city1， 那么query 为.*北京.*能返回city1
+        //query 词为.*云南大理.*能在匹配字典中一条数据，.*云南.*也能匹配到一条数据， 这种情况需要找到最大的匹配
+        string contain_search(const string& query)const;
+
+        //仅仅为了调试
+        friend ostream& operator << (ostream& out, const ATire& atrie){
 
             int index = 0;
-            for(vector<State>::const_iterator ite = atrie.m_states.begin(); ite != atrie.m_states.end(); ++ite){
-                out << index++ << ": " <<*ite<< endl;
+            for(vector<State>::const_iterator ite_state = atrie.m_states.begin(); ite_state != atrie.m_states.end(); ++ite_state){
+                out <<"INDEX:" << index++<< " ";
+                out << "childs:" << (*ite_state).m_child.end() - (*ite_state).m_child.begin()  << " "; 
+                out << "Path: { ";
+                for(vector<Path>::const_iterator ite_path = (*ite_state).m_child.begin(); ite_path != (*ite_state).m_child.end(); ++ite_path){
+                    out << (*ite_path).m_condition << "->" << (*ite_path).m_target << ","; 
+                }
+                out << "} ";
+                out << "INFO:" << (*ite_state).m_info<< endl;
             }
-
+            out <<endl;
+            out <<"min_word_len:"<<atrie.m_min_word_len << "\tmax_word_len:" << atrie.m_max_word_len; 
+            out<<endl;
             return out;
         }
     private:
+        //保存最小和最大的词语长度
+        int                 m_min_word_len;
+        int                 m_max_word_len; 
         //保存着所有的状态
         vector<State>        m_states;
 };
@@ -147,81 +141,74 @@ bool ATire::add_word(const string& word, const string& explain){
         return false;
     }
 
+    m_min_word_len = str_len < m_min_word_len ? str_len : m_min_word_len;
+    m_max_word_len = str_len > m_max_word_len ? str_len : m_max_word_len;
+
     int next_state = -1;
-    State cur_state = m_states[0];
+    State* cur_state = &m_states[0];
     for(int i = 0; i < str_len - 1; i++){
 
         CONDITION c = *p++;
-        next_state = cur_state.getNextState(c);
+        next_state = cur_state->getNextState(c);
         if(next_state == -1){
-            State new_state(m_states.size());
+            State new_state;
             m_states.push_back(new_state);
             next_state = m_states.size() - 1;
-            path path(c, next_state);
-            m_states[cur_state.m_index].add_one_path(path);
+            cur_state->add_one_path(c, next_state);
         }
-        cur_state = m_states[next_state];
+       cur_state = &m_states[next_state];
     }
 
     CONDITION c = *p++;
     //最后一个字符特殊处理, 因为要加入对应的字典说明信息
-    next_state = cur_state.getNextState(c);
+    next_state = cur_state->getNextState(c);
     if(next_state == -1){
-        State new_state(m_states.size(), explain);
+        State new_state(explain);
         m_states.push_back(new_state);
         next_state = m_states.size() - 1;
-        path path(c, next_state);
-        m_states[cur_state.m_index].add_one_path(path);
+        cur_state->add_one_path(c, next_state);
     }
 
     return true;
 }
 
 //完全匹配
-string ATire::search(const string& query) const{
+string ATire::equal_search(const string& query) const{
 
     int next_state = -1;
     const char* p = query.c_str();
     State cur_state = m_states[0];
-    vector<int> vec;
-    vec.push_back(0);
     while(*p != '\0'){
         CONDITION c = *p++;
         next_state = cur_state.getNextState(c);
-        vec.push_back(next_state);
         //说明前缀匹配失败
         if(next_state == -1) {
             break;
         }
         cur_state = m_states[next_state];
     }
-
-    //    cout <<"search 路径{ ";
-    //    for(vector<int>::iterator it = vec.begin(); it != vec.end(); ++it){
-    //        cout << *it << " ";
-    //    }
-    //    cout<<"}" << endl;
 
     return *p == '\0' ? cur_state.m_info : "";
 
 }
 
 //字典中的词完全匹配query的前缀，比如字典中大饭店对应北京， 大饭店X也能返回北京
-string ATire::dict_prefix_search(const string& query) const{
+//黑龙潭对应北京， 黑龙潭公园对应大理， 这种情况需要找到最大的前缀匹配
+string ATire::prefix_search(const string& query) const{
 
     int next_state = -1;
     State cur_state = m_states[0];
+    string max_match_info = "";
     const char* p = query.c_str();
     while(*p != '\0'){
 
         //说明能够前缀匹配
         if(cur_state.m_info != ""){
-            return cur_state.m_info;
-
+            max_match_info = cur_state.m_info;
         }
         CONDITION c = *p++;
         next_state = cur_state.getNextState(c);
-        //说明前缀匹配失败
+        // 不能继续前缀匹配
         if(next_state == -1) {
             break;
         }
@@ -229,8 +216,24 @@ string ATire::dict_prefix_search(const string& query) const{
         cur_state = m_states[next_state];
     }
 
-    return *p == '\0' ? cur_state.m_info : "";
+    return cur_state.m_info != "" ? cur_state.m_info : max_match_info;
 }
+
+string ATire::contain_search(const string& query)const{
+
+    const char* p = query.c_str();
+    int query_len = strlen(p);
+    for(int i = 0; i <= query_len - m_min_word_len; i++){
+        string ret = prefix_search(query.substr(i));
+        if(ret == ""){
+            continue;
+        }
+        return ret;
+    }
+
+    return "";
+}
+
 
 vector<string> split(string& str, const char* c)                                                                                                                             
 {
@@ -275,49 +278,17 @@ int main( int argc , char** argv){
     cout << tire << endl;
     vector<string>::iterator ite = keys.begin();
     for(;ite != keys.end(); ++ite){
-        cout << "query:" << *ite << "\tvalue:" << tire.dict_prefix_search(*ite) << endl;
+        cout << "query:" << *ite  << "\tlength:" << strlen((*ite).c_str())<< "\tvalue:" << tire.prefix_search(*ite) << endl;
     }
+
+    cout << tire << endl;
 
     cout << "请输入query:";
     string query; 
     while(cin >> query){
-        cout << "query:" << query << "\tvalue:" << tire.dict_prefix_search(query) << endl;
+        //cout << "query:" << query << "\tvalue:" << tire.prefix_search(query) << endl;
+        cout << "query:" << query << "\tvalue:" << tire.contain_search(query) << endl;
         cout << "请输入query:";
     }
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
