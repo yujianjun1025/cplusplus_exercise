@@ -1,0 +1,58 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.7	//
+AItem	array_trie.h	/^}AItem;$/;"	t	language:C++	typeref:struct:_item
+ATrie	array_trie.h	/^        ATrie(){$/;"	f	language:C++	class:ATrie	signature:()
+ATrie	array_trie.h	/^class ATrie{$/;"	c	language:C++
+BIT_1	array_trie.h	/^    BIT_1 = 1,$/;"	e	language:C++	enum:_dict_type
+BIT_2	array_trie.h	/^    BIT_2 = 2,$/;"	e	language:C++	enum:_dict_type
+BIT_3	array_trie.h	/^    BIT_3 = 3,$/;"	e	language:C++	enum:_dict_type
+BIT_4	array_trie.h	/^    BIT_4 = 4,$/;"	e	language:C++	enum:_dict_type
+BIT_5	array_trie.h	/^    BIT_5 = 5,$/;"	e	language:C++	enum:_dict_type
+BIT_6	array_trie.h	/^    BIT_6 = 6,$/;"	e	language:C++	enum:_dict_type
+BIT_7	array_trie.h	/^    BIT_7 = 7,$/;"	e	language:C++	enum:_dict_type
+BIT_8	array_trie.h	/^    BIT_8 = 8,$/;"	e	language:C++	enum:_dict_type
+BIT_9	array_trie.h	/^    BIT_9 = 9 $/;"	e	language:C++	enum:_dict_type
+CONDITION	array_trie.h	/^typedef char CONDITION;$/;"	t	language:C++
+DType	array_trie.h	/^}DType;$/;"	t	language:C++	typeref:enum:_dict_type
+DTypeName	array_trie.h	/^const static string DTypeName[] = { $/;"	v	language:C++
+DTypeValue	array_trie.h	/^const static unsigned int DTypeValue[] = {$/;"	v	language:C++
+Index	array_trie.h	/^}Index;$/;"	t	language:C++	typeref:struct:_index
+Path	array_trie.h	/^}Path;$/;"	t	language:C++	typeref:struct:_path
+State	array_trie.h	/^        State(AItem item):m_aitem(item){$/;"	f	language:C++	class:State	signature:(AItem item)
+State	array_trie.h	/^class State{$/;"	c	language:C++
+__ARRAY_TIRE	array_trie.h	2;"	d	language:C++
+_dict_type	array_trie.h	/^typedef enum _dict_type{$/;"	g	language:C++
+_index	array_trie.h	/^typedef struct _index{$/;"	s	language:C++
+_item	array_trie.h	/^typedef struct _item{$/;"	s	language:C++
+_path	array_trie.h	/^typedef struct _path{$/;"	s	language:C++
+add_one_path	array_trie.cpp	/^bool State::add_one_path(CONDITION c, int target){$/;"	f	language:C++	class:State	signature:(CONDITION c, int target)
+add_word	array_trie.cpp	/^bool ATrie::add_word(const string& word, const string& explain, DType dict_type, const string& origin){$/;"	f	language:C++	class:ATrie	signature:(const string& word, const string& explain, DType dict_type, const string& origin)
+contain_search	array_trie.cpp	/^AItem ATrie::contain_search(const string& query)const{$/;"	f	language:C++	class:ATrie	signature:(const string& query) const
+dict_flag	array_trie.h	/^    uint32_t dict_flag:1; \/\/为0 表示不是终止状态， 1代表是终止状态$/;"	m	language:C++	struct:_index
+dict_index	array_trie.h	/^    uint32_t dict_index:22;\/\/对应在存储所有状态的数组中的索引位置$/;"	m	language:C++	struct:_index
+dict_type	array_trie.h	/^    uint32_t dict_type:9; \/\/标志字典类型$/;"	m	language:C++	struct:_index
+dtypeValue2code	array_trie.h	/^inline string dtypeValue2code(unsigned int dtype_value){$/;"	f	language:C++	signature:(unsigned int dtype_value)
+equal_search	array_trie.cpp	/^AItem ATrie::equal_search(const string& query) const{$/;"	f	language:C++	class:ATrie	signature:(const string& query) const
+getNextState	array_trie.cpp	/^int State::getNextState(CONDITION condition)const{$/;"	f	language:C++	class:State	signature:(CONDITION condition) const
+get_status_code	array_trie.h	/^inline string get_status_code(const vector<AItem>& items ){$/;"	f	language:C++	signature:(const vector<AItem>& items )
+item2string	array_trie.h	/^inline string item2string(const AItem& item, unsigned int dtype_index = 1){$/;"	f	language:C++	signature:(const AItem& item, unsigned int dtype_index = 1)
+item2strings	array_trie.h	/^inline vector<string> item2strings(const AItem& item){$/;"	f	language:C++	signature:(const AItem& item)
+m_aitem	array_trie.h	/^        AItem m_aitem;$/;"	m	language:C++	class:State
+m_child	array_trie.h	/^        vector<Path> m_child;$/;"	m	language:C++	class:State
+m_condition	array_trie.h	/^    CONDITION m_condition;$/;"	m	language:C++	struct:_path
+m_explain	array_trie.h	/^    string m_explain;$/;"	m	language:C++	struct:_item
+m_index	array_trie.h	/^    Index m_index;$/;"	m	language:C++	struct:_item
+m_max_word_len	array_trie.h	/^        int m_max_word_len; $/;"	m	language:C++	class:ATrie
+m_min_word_len	array_trie.h	/^        int m_min_word_len;$/;"	m	language:C++	class:ATrie
+m_origin	array_trie.h	/^    string m_origin;$/;"	m	language:C++	struct:_item
+m_states	array_trie.h	/^        vector<State> m_states;$/;"	m	language:C++	class:ATrie
+m_target	array_trie.h	/^    int m_target;$/;"	m	language:C++	struct:_path
+main	main.cpp	/^int main(){$/;"	f	language:C++	signature:()
+path_cmp_condition	array_trie.cpp	/^bool path_cmp_condition(const Path& lhs, CONDITION c){$/;"	f	language:C++	signature:(const Path& lhs, CONDITION c)
+prefix_search	array_trie.cpp	/^AItem ATrie::prefix_search(const string& query) const{$/;"	f	language:C++	class:ATrie	signature:(const string& query) const
+split	array_trie.h	/^vector<string> split(string& str, const char* c)                                                                                                                              {$/;"	f	language:C++	signature:(string& str, const char* c)
+split_item	array_trie.cpp	/^vector<AItem> ATrie::split_item(const string& query) const{$/;"	f	language:C++	class:ATrie	signature:(const string& query) const
