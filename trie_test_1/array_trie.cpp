@@ -95,10 +95,17 @@ bool ATrie::add_word(const string& word, const string& explain, DType dict_type,
         m_states[cur_state.m_aitem.m_index.dict_index].add_one_path(c, aitem.m_index.dict_index);
     }
     //考虑一个词有不同的词语解释的情况
-    else if(next_state != -1 && m_states[next_state].m_aitem.m_index.dict_type != DTypeValue[dict_type]){ 
+    else if(next_state != -1 && m_states[next_state].m_aitem.m_index.dict_type != DTypeValue[dict_type]){
+
+    //    m_states[next_state].m_aitem.m_origin = origin.empty() ? word : origin ;
         m_states[next_state].m_aitem.m_index.dict_type |= DTypeValue[dict_type];
-        m_states[next_state].m_aitem.m_index.dict_flag = 1;
-        m_states[next_state].m_aitem.m_explain += "\t" + DTypeName[dict_type] + "=" + explain;
+        if(m_states[next_state].m_aitem.m_index.dict_flag){
+            m_states[next_state].m_aitem.m_explain += "\t" + DTypeName[dict_type] + "=" + explain;
+        }
+        else{
+            m_states[next_state].m_aitem.m_index.dict_flag = 1;
+            m_states[next_state].m_aitem.m_explain =  DTypeName[dict_type] + "=" + explain;
+        }
     }
 
     return true;

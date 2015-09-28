@@ -5,7 +5,7 @@
 #include <iostream>
 #include <stdint.h>
 #include <stdlib.h>
-#include "util.h"
+#include <string.h>
 using namespace std;
 
 
@@ -66,20 +66,20 @@ const static string DTypeName[] = {
     "9"
 };
 
-vector<string> split(string& str, const char* c)                                                                                                                              {
-  vector<string> res;
-  std::string::size_type pos1 = 0;
-  std::string::size_type pos2 = str.find(c);
-  string::size_type split_length = strlen(c);
-  while(std::string::npos != pos2)
-  {
-    res.push_back(str.substr(pos1, pos2-pos1));
-    pos1 = pos2 + split_length;
-    pos2 = str.find(c, pos1);
-  }
-  if(pos1 != str.length())
-    res.push_back(str.substr(pos1));
-  return res;
+inline vector<string> split(string& str, const char* c)                                                                                                                              {
+    vector<string> res;
+    std::string::size_type pos1 = 0;
+    std::string::size_type pos2 = str.find(c);
+    string::size_type split_length = strlen(c);
+    while(std::string::npos != pos2)
+    {
+        res.push_back(str.substr(pos1, pos2-pos1));
+        pos1 = pos2 + split_length;
+        pos2 = str.find(c, pos1);
+    }
+    if(pos1 != str.length())
+        res.push_back(str.substr(pos1));
+    return res;
 
 } 
 
@@ -93,7 +93,7 @@ class State{
         //给定一个条件返回下一个跳转状态， －1 代表 没有这条路径
         int getNextState(CONDITION condition)const;
 
-    private:
+    public:
         //有序的纪录所有的状态跳转路径
         vector<Path> m_child;
         //保存终止状态对应的在词典中的意思, 以及在ATrie中对应的位置
@@ -134,7 +134,7 @@ class ATrie{
         //将query词分成字典中的词语,不会去除杂词再匹配
         vector<AItem> split_item(const string& query) const;
 
-    private:
+    public:
 
         //保存最小和最大的词语长度
         int m_min_word_len;
