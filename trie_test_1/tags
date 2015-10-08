@@ -3,7 +3,7 @@
 !_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
-!_TAG_PROGRAM_VERSION	5.7	//
+!_TAG_PROGRAM_VERSION	5.8	//
 AItem	array_trie.h	/^}AItem;$/;"	t	language:C++	typeref:struct:_item
 ATrie	array_trie.h	/^        ATrie(){$/;"	f	language:C++	class:ATrie	signature:()
 ATrie	array_trie.h	/^class ATrie{$/;"	c	language:C++
@@ -35,6 +35,7 @@ contain_search	array_trie.cpp	/^AItem ATrie::contain_search(const string& query)
 dict_flag	array_trie.h	/^    uint32_t dict_flag:1; \/\/为0 表示不是终止状态， 1代表是终止状态$/;"	m	language:C++	struct:_index
 dict_index	array_trie.h	/^    uint32_t dict_index:22;\/\/对应在存储所有状态的数组中的索引位置$/;"	m	language:C++	struct:_index
 dict_type	array_trie.h	/^    uint32_t dict_type:9; \/\/标志字典类型$/;"	m	language:C++	struct:_index
+display_trie	main.cpp	/^void display_trie(ATrie* atrie){$/;"	f	language:C++	signature:(ATrie* atrie)
 dtypeValue2code	array_trie.h	/^inline string dtypeValue2code(unsigned int dtype_value){$/;"	f	language:C++	signature:(unsigned int dtype_value)
 equal_search	array_trie.cpp	/^AItem ATrie::equal_search(const string& query) const{$/;"	f	language:C++	class:ATrie	signature:(const string& query) const
 getNextState	array_trie.cpp	/^int State::getNextState(CONDITION condition)const{$/;"	f	language:C++	class:State	signature:(CONDITION condition) const
@@ -51,8 +52,8 @@ m_min_word_len	array_trie.h	/^        int m_min_word_len;$/;"	m	language:C++	cla
 m_origin	array_trie.h	/^    string m_origin;$/;"	m	language:C++	struct:_item
 m_states	array_trie.h	/^        vector<State> m_states;$/;"	m	language:C++	class:ATrie
 m_target	array_trie.h	/^    int m_target;$/;"	m	language:C++	struct:_path
-main	main.cpp	/^int main(){$/;"	f	language:C++	signature:()
+main	main.cpp	/^int main(int argc, char** args){$/;"	f	language:C++	signature:(int argc, char** args)
 path_cmp_condition	array_trie.cpp	/^bool path_cmp_condition(const Path& lhs, CONDITION c){$/;"	f	language:C++	signature:(const Path& lhs, CONDITION c)
 prefix_search	array_trie.cpp	/^AItem ATrie::prefix_search(const string& query) const{$/;"	f	language:C++	class:ATrie	signature:(const string& query) const
-split	array_trie.h	/^vector<string> split(string& str, const char* c)                                                                                                                              {$/;"	f	language:C++	signature:(string& str, const char* c)
+split	array_trie.h	/^inline vector<string> split(string& str, const char* c)                                                                                                                              {$/;"	f	language:C++	signature:(string& str, const char* c)
 split_item	array_trie.cpp	/^vector<AItem> ATrie::split_item(const string& query) const{$/;"	f	language:C++	class:ATrie	signature:(const string& query) const
